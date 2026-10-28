@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user with different roles.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "vendor", "admin", "rider"] },
+        "profileImage": { "type": "string" },
+        "addresses": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fullName", "email", "role"]
+    },
+    "Vendor": {
+      "title": "Vendor",
+      "description": "Seller profile for multi-vendor functionality.",
+      "type": "object",
+      "properties": {
+        "vendorId": { "type": "string" },
+        "businessName": { "type": "string" },
+        "description": { "type": "string" },
+        "logo": { "type": "string" },
+        "banner": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "banned"] },
+        "rating": { "type": "number" },
+        "totalSales": { "type": "number" },
+        "totalRevenue": { "type": "number" },
+        "walletBalance": { "type": "number" },
+        "kyc": {
+          "type": "object",
+          "properties": {
+            "citizenshipFront": { "type": "string" },
+            "citizenshipBack": { "type": "string" },
+            "panVatDoc": { "type": "string" },
+            "panNumber": { "type": "string" },
+            "address": { "type": "string" },
+            "phone": { "type": "string" },
+            "verified": { "type": "boolean" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["vendorId", "businessName", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "E-commerce product listing.",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "vendorId": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "flashSalePrice": { "type": "number" },
+        "flashSaleEnd": { "type": "string", "format": "date-time" },
+        "stock": { "type": "number" },
+        "sku": { "type": "string" },
+        "rating": { "type": "number" },
+        "totalReviews": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "trending": { "type": "boolean" },
+        "variations": { "type": "array", "items": { "type": "object" } },
+        "specifications": { "type": "array", "items": { "type": "object" } },
+        "videoUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "banned", "deleted"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "name", "vendorId", "price", "status"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product categories.",
+      "type": "object",
+      "properties": {
+        "categoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["categoryId", "name"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order details.",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "object" } },
+        "totalAmount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled", "returned"] },
+        "riderId": { "type": "string" },
+        "deliveryStatus": { "type": "string", "enum": ["assigned", "accepted", "picked", "out_for_delivery", "delivered", "cancelled"] },
+        "assignedAt": { "type": "string", "format": "date-time" },
+        "acceptedAt": { "type": "string", "format": "date-time" },
+        "pickedAt": { "type": "string", "format": "date-time" },
+        "outForDeliveryAt": { "type": "string", "format": "date-time" },
+        "deliveredAt": { "type": "string", "format": "date-time" },
+        "cancelledAt": { "type": "string", "format": "date-time" },
+        "cancellationReason": { "type": "string" },
+        "deliveryProof": { "type": "string" },
+        "shippingAddress": { "type": "object" },
+        "paymentMethod": { "type": "string", "enum": ["COD", "Khalti", "eSewa"] },
+        "paymentStatus": { "type": "string", "enum": ["unpaid", "paid", "verification_pending"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "customerId", "items", "totalAmount", "status"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Product rating and review.",
+      "type": "object",
+      "properties": {
+        "reviewId": { "type": "string" },
+        "productId": { "type": "string" },
+        "customerId": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reviewId", "productId", "customerId", "rating"]
+    },
+    "Banner": {
+      "title": "Banner",
+      "description": "Promotional banners.",
+      "type": "object",
+      "properties": {
+        "bannerId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "link": { "type": "string" },
+        "type": { "type": "string" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["bannerId", "imageUrl", "active"]
+    },
+    "Coupon": {
+      "title": "Coupon",
+      "description": "Discount coupons for products.",
+      "type": "object",
+      "properties": {
+        "couponId": { "type": "string" },
+        "code": { "type": "string" },
+        "type": { "type": "string", "enum": ["percentage", "fixed"] },
+        "value": { "type": "number" },
+        "minSpend": { "type": "number" },
+        "maxDiscount": { "type": "number" },
+        "vendorId": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "expired", "disabled"] },
+        "usageLimit": { "type": "number" },
+        "usedCount": { "type": "number" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["couponId", "code", "type", "value", "vendorId", "status"]
+    },
+    "Rider": {
+      "title": "Rider",
+      "description": "Delivery rider profile.",
+      "type": "object",
+      "properties": {
+        "riderId": { "type": "string" },
+        "userId": { "type": "string" },
+        "vehicleType": { "type": "string" },
+        "vehiclePlate": { "type": "string" },
+        "licenseNumber": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "banned"] },
+        "isAvailable": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "totalDeliveries": { "type": "number" },
+        "activeOrdersCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["riderId", "userId", "status"]
+    },
+    "AppAd": {
+      "title": "AppAd",
+      "description": "Interactive in-app advertisements and campaigns",
+      "type": "object",
+      "properties": {
+        "adId": { "type": "string" },
+        "title": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "link": { "type": "string" },
+        "location": { "type": "string", "enum": ["banner", "popup", "offer"] },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "active": { "type": "boolean" },
+        "views": { "type": "number" },
+        "clicks": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adId", "title", "imageUrl", "location", "startDate", "endDate", "active", "views", "clicks"]
+    },
+    "ServiceArea": {
+      "title": "ServiceArea",
+      "description": "Registered delivery/service area parameters",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "country": { "type": "string", "enum": ["Nepal", "India"] },
+        "state": { "type": "string" },
+        "district": { "type": "string" },
+        "city": { "type": "string" },
+        "municipality": { "type": "string" },
+        "ward": { "type": "string" },
+        "status": { "type": "string", "enum": ["Enabled", "Disabled"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "country", "state", "district", "city", "status"]
+    }
+  },
+  "firestore": {
+    "users": { "schema": "User", "description": "User profiles" },
+    "vendors": { "schema": "Vendor", "description": "Vendor details" },
+    "products": { "schema": "Product", "description": "Products available for sale" },
+    "categories": { "schema": "Category", "description": "Categories for product classification" },
+    "orders": { "schema": "Order", "description": "Customer orders" },
+    "reviews": { "schema": "Review", "description": "User reviews for products" },
+    "banners": { "schema": "Banner", "description": "Home page banners" },
+    "coupons": { "schema": "Coupon", "description": "Discount coupons" },
+    "riders": { "schema": "Rider", "description": "Rider profiles" },
+    "ads": { "schema": "AppAd", "description": "In-app advertisement slots and analytics data" },
+    "areas": { "schema": "ServiceArea", "description": "Delivery and logistic service areas" }
+  }
+}

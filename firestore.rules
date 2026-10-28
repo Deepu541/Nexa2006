@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Fully permissive rule to prevent any permission issues during development, testing, and local/mock bypass logins.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "NexaMart",
+  "description": "Professional Multi-Vendor E-Commerce Platform for Nepal with Customer, Vendor, Admin, and Rider panels. Featuring professional checkout and a streamlined Cash on Delivery (COD) order management system.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

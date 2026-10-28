@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd5;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .will-change-transform {
+    will-change: transform;
+  }
+}
+
+body {
+  @apply bg-gray-950 text-gray-900 antialiased overflow-x-hidden;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+  overscroll-behavior-y: none; /* Prevents "pull to refresh" bounce on mobile browser chrome */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Ensure smooth scrolling with native mobile behavior */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Better touch targets for buttons/links on mobile */
+a, button {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Restore selection for inputs */
+input, textarea, [contenteditable="true"] {
+  user-select: text !important;
+  min-height: unset; /* Revert min-height for inline inputs */
+}
+
+/* Global iOS Auto-Zoom Prevention on Form Elements */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Maximize container view limits - disable zooming gestures to secure responsive layout */
+html {
+  touch-action: pan-x pan-y;
+}
+
+/* ==========================================
+   ONE-CLICK HIGH CONTRAST DARK MODE OVERRIDES
+   ========================================== */
+.dark {
+  --background-dark: #0f172a; /* Slate 900 */
+  --card-dark: #1e293b;       /* Slate 800 */
+  --input-dark: #0f172a;      /* Slate 900 */
+  --border-dark: #334155;     /* Slate 700 */
+  --text-active: #f8fafc;     /* Slate 50 */
+  --text-secondary: #cbd5e1;  /* Slate 300 */
+  --text-muted: #94a3b8;      /* Slate 400 */
+  
+  color-scheme: dark;
+}
+
+/* Ensure global HTML and Body adapt to CSS variable */
+.dark,
+.dark body,
+.dark #root,
+.dark .min-h-screen {
+  background-color: var(--background-dark) !important;
+  color: var(--text-active) !important;
+}
+
+/* Global elements overriding */
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-slate-50,
+.dark .bg-zinc-50,
+.dark .bg-gray-50\/50,
+.dark .bg-neutral-50,
+.dark .bg-zinc-100 {
+  background-color: var(--background-dark) !important;
+}
+
+.dark .bg-white,
+.dark .bg-slate-100,
+.dark .bg-zinc-200 {
+  background-color: var(--card-dark) !important;
+}
+
+/* Overriding navigation tabs, support channels, dialog cards */
+.dark nav,
+.dark header:not(#main-header) {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+}
+
+.dark .border-gray-200,
+.dark .border-gray-100,
+.dark .border-gray-300,
+.dark .border-gray-150,
+.dark .border-gray-50,
+.dark .border-neutral-200,
+.dark .border-slate-200 {
+  border-color: var(--border-dark) !important;
+}
+
+/* Inputs, Textareas, Select Dropdowns */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: var(--input-dark) !important;
+  color: var(--text-active) !important;
+  border-color: var(--border-dark) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.8;
+}
+
+/* Typography elements text overriding */
+.dark .text-gray-900,
+.dark .text-gray-950,
+.dark .text-slate-900,
+.dark .text-black,
+.dark .text-neutral-900 {
+  color: var(--text-active) !important;
+}
+
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-slate-700,
+.dark .text-neutral-700 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-slate-500,
+.dark .text-neutral-500 {
+  color: var(--text-muted) !important;
+}
+
+/* Badges, Special states */
+.dark .bg-orange-50 {
+  background-color: rgba(234, 88, 12, 0.15) !important;
+  border-color: rgba(234, 88, 12, 0.3) !important;
+}
+
+.dark .text-orange-600 {
+  color: #ff8a4c !important; /* Brighter high contrast orange */
+}
+
+.dark .bg-green-50 {
+  background-color: rgba(74, 222, 128, 0.1) !important;
+  border-color: rgba(74, 222, 128, 0.2) !important;
+}
+
+.dark .text-green-600 {
+  color: #4ade80 !important;
+}
+
+/* Specific details for shadow and divider lines */
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Floating interactive buttons and active states list */
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--border-dark) !important;
+}
+
